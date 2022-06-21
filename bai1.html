@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #contactApp {
+    margin: auto;
+    border: 1px solid black;
+    box-sizing: border-box;
+    width: fit-content;
+}
+#addContact {
+    margin: 10px 30px;
+    display: grid;
+    grid-template-columns: 37.5% 37.5% 21%;
+    grid-column-gap: 2%;    
+}
+#searchContact {
+    margin: 10px 30px;
+    display: grid;
+    grid-template-columns: 65% 10% 21%;
+    grid-column-gap: 2%;  
+}
+.buttonClick {
+    background-color: blue;
+    color: white;
+    padding: 4px 2px;
+    border-radius: 7px;
+    border: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+.buttonClick:active {
+    transform: translateY(1.5px);
+}
+.fillIn {
+    padding: 0px 7px;
+    border-radius: 7px;
+    border: hidden;
+    background-color: rgb(243, 239, 239);  
+}
+.horizontal {
+    border: 1% solid silver; 
+    margin: 10px 20px;
+}
+.contact {
+    background-color: rgb(238, 230, 230);
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 30px;
+    padding: 7px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+    </style>
+</head>
+<body onload=" viewData()">
+    <script>
+        // bai1
+        // Viết một function đảo ngược một string bất kỳ, sử dụng các phương thức của array.
+
+        //Input: "abcdef"
+
+        //Ouput: "fedcba"
+        
+function reverse () {
+let org_str = "abcdef"
+let reverse_str = org_str.split('').reverse().join('');
+console.log(reverse_str)
+
+}
+reverse()
+
+//bai 2
+// Viết một function xoá các phần từ trùng lặp trong một mảng các số:
+
+// Input: [1, 2, 3, 5, 4, 2, 6, 4]
+
+// Output: [1, 2, 3, 5, 4, 6]
+const arraynumber = [1, 2, 3, 5, 4, 2, 6, 4];
+
+let arrfr = Array.from(new Set(arraynumber));
+console.log(arrfr)
+
+//bai 3
+ 
+/*tạo hàm tìm phần tử xuất hiện nhiều nhất trong mảng JavaScript*/
+function array_unique(array){
+    array.sort();
+
+    let max =[0,0];
+
+    //Sử dụng vòng lặp for để lọc ra các phần tử xuất hiện nhiều hơn 1 lần
+    //So sánh số lần xuất hiện và thay đổi max khi cần.
+    let count =1;
+    for (let i = array.length-1; i > 0; --i) {
+        if (array[i] == array[i-1]) ++count; //Thấy phần tử trùng nhau thì tiếp tục đếm
+        else{
+             //So sánh số lần xuất hiện với max[1] 
+             if (max[1] < count){ 
+                  //Nếu tìm thấy phần tử xuất hiện nhiều hơn thì gán phần tử vào max[0]
+                  //Và gán số lần xuất hiện vào max[1]
+                  max[0] = array[i];
+                  max[1] = count;   
+             }
+             count = 1;
+        }
+    }
+    console.log( "value: "+max[0]+" count "+max[1]);
+}
+
+
+let array = [1, 2, 3, 5, 6, 4, 2, 1, 6, 3, 5, 3];
+
+
+//Tìm phần tử xuất hiện nhiều nhất trong mảng JavaScript
+array_unique(array);
+    </script>
+
+
+
+    <script>
+        let data = 
+        [
+        ];
+
+        function viewData (arr){
+            let list = arr
+            let table = `
+            <div class="contact">
+            <span class="name">Alice</span>
+            <span class="phone">1900561252</span>
+        </div> 
+            
+            ` 
+            arr.map(value => {
+                table += ``
+           
+            table += `
+            <div class="contact">
+            <span class="name">${value.name}</span>
+            <span class="phone">${value.dienthoai}</span>
+        </div> 
+            
+            ` 
+ 
+                
+            })
+            document.getElementById("viewdata").innerHTML = table
+        }
+        function addData(){
+            let name = document.getElementById('name').value;
+            let dienthoai = document.getElementById('dienthoai').value;
+        
+        let item ={
+            name : name,
+            dienthoai : dienthoai
+        };
+        data.push(item)
+        viewData (data)
+        console.log(data);
+    }
+
+  function searchUsername(){
+      let valuesearchinput  = document.getElementById(`search`).value
+    let userSearchname = data.filter(value => {
+      return value.name.toUpperCase().includes(valuesearchinput.toUpperCase())
+    })
+    console.log(userSearchname)
+
+    viewData(userSearchname)
+
+  }
+
+
+    </script>
+
+<div id="contactApp">
+    <form id="addContact">
+        <input id="name" type="text" class="fillIn" placeholder="Tên">
+        <input id="dienthoai" type="text" class="fillIn" placeholder="Điện thoại">
+        <input type="button"  onclick="addData ()" onc class="buttonClick" value="THÊM">
+
+    </form>
+    <hr class="horizontal" >
+    <div id="searchContact">
+        <input id="search" type="text" class="fillIn" placeholder="Tìm kiếm" oninput="searchUsername()">
+        <button id="searchButton" class="buttonClick"> TÌM </button>
+        <button id="deleteDuplicate" class="buttonClick">XÓA TRÙNG</button>
+    </div>
+        <table id="viewdata" onload="viewdata() ">
+      
+            
+ 
+</div>
+</body>
+</html>
